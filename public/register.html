@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism Signup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #45b452, #01201e);
+        }
+
+        .signup-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 5px;
+            font-size: 1rem;
+            color: black;
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .login-link a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .error {
+            color: #ffcccc;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .password-toggle:hover {
+            color: white;
+        } 
+        ::placeholder {
+            color: black ;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Signup</h2>
+        <form id="signupForm">
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" required placeholder= "Enter Your Name"> 
+                <div class="error" id="fullNameError"></div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required placeholder="Valid Email">
+                <div class="error" id="emailError"></div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="Alpha Numeric">
+                <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                <div class="error" id="passwordError"></div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" required placeholder=" Confirm Password">
+                <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
+                <div class="error" id="confirmPasswordError"></div>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" required placeholder="">
+                <div class="error" id="dobError"></div>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" required aria-placeholder=" Gender">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div class="error" id="genderError"></div>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" required placeholder="10 digit number">
+                <div class="error" id="phoneError"></div>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" required placeholder="Address">
+                <div class="error" id="addressError"></div>
+            </div>
+
+            <!-- Category -->
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" required>
+                    <option value="">Select Category</option>
+                    <option value="Job Seeker">Job Seeker</option>
+                    <option value="Job Poster">Job Poster</option>
+                </select>
+                <div class="error" id="categoryError"></div>
+            </div>
+
+            <button type="submit">Signup</button>
+        </form>
+
+        <div class="login-link">
+            Already have an account? <a href="login.html">Login here</a>
+        </div>
+    </div>
+
+   
+    <script>
+        const form = document.getElementById('signupForm');
+        const inputs = {
+            fullName: document.getElementById('fullName'),
+            email: document.getElementById('email'),
+            password: document.getElementById('password'),
+            confirmPassword: document.getElementById('confirmPassword'),
+            dob: document.getElementById('dob'),
+            gender: document.getElementById('gender'),
+            phone: document.getElementById('phone'),
+            address: document.getElementById('address'),
+            category: document.getElementById('category'),
+        };
+    
+        // Password toggle functionality
+        const togglePassword = document.getElementById('togglePassword');
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+    
+        togglePassword.addEventListener('click', () => {
+            const type = inputs.password.getAttribute('type') === 'password' ? 'text' : 'password';
+            inputs.password.setAttribute('type', type);
+            togglePassword.classList.toggle('fa-eye-slash');
+        });
+    
+        toggleConfirmPassword.addEventListener('click', () => {
+            const type = inputs.confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            inputs.confirmPassword.setAttribute('type', type);
+            toggleConfirmPassword.classList.toggle('fa-eye-slash');
+        });
+    
+        // Validation functions
+        const validateFullName = (name) => {
+            if (!name) return 'Full Name is required';
+            if (!/^[A-Za-z\s]+$/.test(name)) return 'Invalid name';
+            return '';
+        };
+    
+        const validateEmail = (email) => {
+            if (!email) return 'Email is required';
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Invalid email';
+            return '';
+        };
+    
+        const validatePassword = (password) => {
+            if (!password) return 'Password is required';
+            if (password.length < 8) return 'Minimum 8 characters';
+            if (!/[A-Z]/.test(password)) return 'Needs uppercase letter';
+            if (!/[0-9]/.test(password)) return 'Needs number';
+            return '';
+        };
+    
+        const validateConfirmPassword = (password, confirmPassword) => {
+            if (password !== confirmPassword) return 'Passwords mismatch';
+            return '';
+        };
+    
+        const validateDOB = (dob) => {
+    if (!dob) return 'Date of Birth is required';
+    const today = new Date();
+    const dobDate = new Date(dob);
+    let age = today.getFullYear() - dobDate.getFullYear(); // Changed to "let"
+    const monthDiff = today.getMonth() - dobDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
+        age--; // Now works because "age" is declared with "let"
+    }
+    if (age < 18) return 'You must be at least 18 years old';
+    return '';
+};
+    
+        const validateGender = (gender) => {
+            if (!gender) return 'Gender is required';
+            return '';
+        };
+    
+        const validatePhone = (phone) => {
+            if (!phone) return 'Phone Number is required';
+            if (!/^\d{10}$/.test(phone)) return 'Invalid phone number';
+            return '';
+        };
+    
+        const validateAddress = (address) => {
+            if (!address) return 'Address is required';
+            return '';
+        };
+    
+        const validateCategory = (category) => {
+            if (!category) return 'Category is required';
+            return '';
+        };
+    
+       // Form submission
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let isValid = true;
+
+    const errors = {
+        fullName: validateFullName(inputs.fullName.value.trim()),
+        email: validateEmail(inputs.email.value.trim()),
+        password: validatePassword(inputs.password.value.trim()),
+        confirmPassword: validateConfirmPassword(
+            inputs.password.value.trim(),
+            inputs.confirmPassword.value.trim()
+        ),
+        dob: validateDOB(inputs.dob.value.trim()),
+        gender: validateGender(inputs.gender.value.trim()),
+        phone: validatePhone(inputs.phone.value.trim()),
+        address: validateAddress(inputs.address.value.trim()),
+        category: validateCategory(inputs.category.value.trim()),
+    };
+
+    Object.keys(errors).forEach(field => {
+        const errorElement = document.getElementById(`${field}Error`);
+        errorElement.textContent = errors[field];
+        if (errors[field]) isValid = false;
+    });
+
+    if (isValid) {
+        const userData = {
+            fullName: inputs.fullName.value.trim(),
+            email: inputs.email.value.trim(),
+            password: inputs.password.value.trim(),
+            dob: inputs.dob.value.trim(),
+            gender: inputs.gender.value.trim(),
+            phone: inputs.phone.value.trim(),
+            address: inputs.address.value.trim(),
+            category: inputs.category.value.trim(),
+        };
+
+        // Send data to the server
+        fetch('http://localhost:3000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data === 'User registered successfully') {
+                // Set login state and user data
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userData', JSON.stringify({
+                    email: userData.email,
+                    fullName: userData.fullName
+                }));
+
+                alert('Registration successful!');
+                window.location.href = 'home.html'; // Redirect to home page
+            } else {
+                alert('Registration failed. Please try again.');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('Registration failed. Please try again.');
+        });
+    }
+});
+    
+        // Real-time validation
+        inputs.fullName.addEventListener('input', () => {
+            document.getElementById('fullNameError').textContent = 
+                validateFullName(inputs.fullName.value.trim());
+        });
+    
+        inputs.email.addEventListener('input', () => {
+            document.getElementById('emailError').textContent = 
+                validateEmail(inputs.email.value.trim());
+        });
+    
+        inputs.password.addEventListener('input', () => {
+            document.getElementById('passwordError').textContent = 
+                validatePassword(inputs.password.value.trim());
+        });
+    
+        inputs.confirmPassword.addEventListener('input', () => {
+            document.getElementById('confirmPasswordError').textContent = 
+                validateConfirmPassword(
+                    inputs.password.value.trim(),
+                    inputs.confirmPassword.value.trim()
+                );
+        });
+    
+        inputs.dob.addEventListener('input', () => {
+            document.getElementById('dobError').textContent = 
+                validateDOB(inputs.dob.value.trim());
+        });
+    
+        inputs.gender.addEventListener('change', () => {
+            document.getElementById('genderError').textContent = 
+                validateGender(inputs.gender.value.trim());
+        });
+    
+        inputs.phone.addEventListener('input', () => {
+            document.getElementById('phoneError').textContent = 
+                validatePhone(inputs.phone.value.trim());
+        });
+    
+        inputs.address.addEventListener('input', () => {
+            document.getElementById('addressError').textContent = 
+                validateAddress(inputs.address.value.trim());
+        });
+    
+        inputs.category.addEventListener('change', () => {
+            document.getElementById('categoryError').textContent = 
+                validateCategory(inputs.category.value.trim());
+        });
+    </script>
+</body>
+</html>

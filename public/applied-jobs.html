@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applied Jobs - Flexi Job</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Add your existing CSS styles here */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        h2 {
+            color: #002633;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .job-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-card h3 {
+            color: #002633;
+            margin-bottom: 10px;
+        }
+
+        .job-card p {
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .job-card button {
+            background: #00cc66;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .job-card button:hover {
+            background: #00994d;
+        }
+
+        .no-jobs {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .map-btn {
+            background: #007bff;
+        }
+
+        .map-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Applied Jobs</h2>
+        <div id="appliedJobsList">
+            <!-- Job cards will be loaded here -->
+        </div>
+    </div>
+    <script>
+ document.addEventListener('DOMContentLoaded', async () => {
+  const user = JSON.parse(localStorage.getItem('userData'));
+  if (!user?.email) {
+    alert('Please login first!');
+    window.location.href = 'login.html';
+    return;
+  }
+
+  try {
+    // Fetch applied jobs from the server
+    const response = await fetch(`http://localhost:3000/api/applications?userId=${user.email}`);
+
+    // Check for HTTP errors
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse the JSON response
+    const data = await response.json(); // Read the response body once
+    console.log('API Response:', data); // Debugging
+
+    // Access the nested array (if applicable)
+    const appliedJobs = data.applications || data || []; // Handle both nested and flat responses
+
+    // Display jobs
+    const container = document.getElementById('appliedJobsList');
+    if (appliedJobs.length === 0) {
+      container.innerHTML = `
+        <div class="no-jobs">
+          <p>You haven't applied to any jobs yet.</p>
+        </div>
+      `;
+      return;
+    }
+
+    // Render job cards
+   // applied-jobs.html
+container.innerHTML = appliedJobs.map(job => `
+    <div class="job-card">
+        <h3>${job.title || 'Untitled Job'}</h3>
+        <p>Salary: ₹${job.salary}/hour</p>
+        <p>Location: ${job.district}, ${job.state}</p>
+        <p>Applied On: ${new Date(job.applicationDate).toLocaleDateString('en-IN')}</p>
+        ${job.googleMapLink ? 
+            `<button class="map-btn" onclick="openMap('${job.googleMapLink}')">View on Map</button>` : 
+            '<p>No map link available</p>'
+        }
+    </div>
+`).join('');
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Failed to load applied jobs. Check the console for details.");
+  }
+});
+
+// Function to open Google Map link
+function openMap(link) {
+    if (link) window.open(link, '_blank');
+    else alert('Map link not available!');
+}
+
+    </script>
+</body>
+</html>

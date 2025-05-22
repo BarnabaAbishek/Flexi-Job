@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Flexi Job</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Your existing CSS styles here */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        /* Navigation Styles */
+        .navmenu {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: #002633;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .mainlogo a {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00cc66;
+            text-decoration: none;
+        }
+
+        .navbarList {
+            list-style-type: none;
+            display: inline-flex;
+            margin-right: 1rem;
+            gap: 1.5rem;
+        }
+
+        .navbarList a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbarList a:hover {
+            color: #00cc66;
+        }
+
+        .reg {
+            background-color: #00cc66;
+            color: #241c1c;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .reg:hover {
+            background-color: #008040;
+        }
+
+        .profile-info {
+            height: 2rem;
+            width: 2rem;
+            cursor: pointer;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .profile-info img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Dropdown Menu */
+        .submenu-wrap {
+            position: absolute;
+            top: 11%;
+            right: 0;
+            width: 20rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s;
+            z-index: 1000;
+        }
+
+        .submenu-wrap.open-menu {
+            max-height: 600px;
+        }
+
+        .sub-menu {
+            background: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .user-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-info h2 {
+            font-weight: 500;
+            color: #002633;
+        }
+
+        .sub-menu-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 10px 0;
+            color: #525252;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .sub-menu-link:hover {
+            color: #00cc66;
+        }
+
+        .sub-menu-link i {
+            font-size: 1.2rem;
+            color: #00cc66;
+            width: 25px;
+        }
+
+        /* Hero Section */
+        .backgroundimg {
+            background: url("backgroundImg.jpg") center/cover;
+            height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-container {
+            position: relative;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .searchbar {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .searchbar input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .searchButton {
+            padding: 0 1.5rem;
+            border: none;
+            background-color: #00cc66;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .searchButton:hover {
+            background-color: #008040;
+        }
+
+        #searchSuggestions {
+            position: absolute;
+            width: 100%;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 0 0 5px 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Job Cards */
+        .job-Listing, .jobs-section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: inline-block;
+            vertical-align: top;
+            transition: transform 0.3s ease;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .job-card h3 {
+            color: #002633;
+            margin-bottom: 10px;
+            font-size: 1.25rem;
+        }
+
+        .job-card p {
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .job-card button {
+            background-color: #00cc66;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .job-card button:hover {
+            background-color: #008040;
+        }
+
+        @media (max-width: 768px) {
+            .job-card {
+                width: 100%;
+                margin: 10px 0;
+            }
+            
+            .searchbar input {
+                width: 100%;
+            }
+            
+            .navbarList {
+                gap: 1rem;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background-color: #002633;
+            color: #fff;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .footer-section h4 {
+            color: #00cc66;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #00cc66;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #00cc66;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #004354;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="navmenu">
+            <div class="mainlogo">
+                <a href="home.html">Flexi Job
+                    <i class="fas fa-briefcase fa-2x" style="color: #00cc66;"></i>
+                </a>
+            </div>
+            <ul class="navbarList">
+                <li><a href="home.html">Home</a></li>
+                <li id="postJobLink" style="display: none;"><a href="job-post.html">Post Job</a></li>
+                <li><a href="">Contact</a></li>
+                <li><a href="register.html" class="reg" id="registerBtn">Register</a></li>
+                <li class="profile-info" onclick="toggleMenu(event)">
+                    <img id="navUserIcon" src="default-user-icon.png" alt="Profile">
+                </li>
+            </ul>
+
+            <!-- Dropdown Menu -->
+            <div class="submenu-wrap" id="submenu">
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img id="dropdownUserIcon" src="default-user-icon.png" alt="Profile">
+                        <h2 id="dropdownUserName">User Name</h2>
+                    </div>
+                    <hr>
+                    <a href="editProfile.html" class="sub-menu-link">
+                        <i class="fas fa-user-edit"></i>
+                        <p>Edit Profile</p>
+                    </a>
+                    <a href="applied-jobs.html" class="sub-menu-link">
+                        <i class="fas fa-file-alt"></i>
+                        <p>Applied Jobs</p>
+                    </a>
+                    <a href="" class="sub-menu-link">
+                        <i class="fas fa-cog"></i>
+                        <p>Settings</p>
+                    </a>
+                    <a href="" class="sub-menu-link">
+                        <i class="fas fa-question-circle"></i>
+                        <p>Help</p>
+                    </a>
+                    <a href="" class="sub-menu-link" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <p>Logout</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="backgroundimg">
+        <div class="search-container">
+            <div class="searchbar">
+                <input type="text" placeholder="Search Job, location, or expected salary" id="searchInput">
+                <button class="searchButton">Search</button>
+            </div>
+            <div id="searchSuggestions"></div>
+        </div>
+    </section>
+
+    <!-- Job Listings -->
+    <section class="job-Listing">
+        <h2>Recently Posted Jobs</h2>
+        <div id="recentJobs"></div>
+    </section>
+
+    <section class="jobs-section">
+        <h2>All Jobs</h2>
+        <div id="allJobs"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Company Overview</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Browse Jobs</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="contact-info" style="margin-top: 20px;">
+                    <p>Email: flexijob9@gmail.com</p>
+                    <p>Phone: +91 97518 59361</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 FlexiJobs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+       
+        document.addEventListener("DOMContentLoaded", () => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const userData = JSON.parse(localStorage.getItem("userData"));
+
+    // Redirect to login if not logged in
+    if (!isLoggedIn || !userData || !userData.email) {
+        alert("Please login first.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    const userEmail = userData.email;
+
+    // Hide register button
+    document.getElementById("registerBtn").style.display = "none";
+
+    // Fetch user data from server
+    fetch(`http://localhost:3000/api/user?email=${userEmail}`)
+        .then(response => response.json())
+        .then(user => {
+            // Show Post Job link for specific user
+            if (user.email === "barnabaabishek2005@gmail.com") {
+                document.getElementById("postJobLink").style.display = "block";
+            }
+
+            // Update profile info
+            document.getElementById("dropdownUserName").textContent = user.fullName;
+        })
+        .catch(error => console.error("Error fetching user data:", error));
+
+    // Load profile picture from localStorage
+    const profilePic = localStorage.getItem("profilePic");
+    const navUserIcon = document.getElementById("navUserIcon");
+    const dropdownUserIcon = document.getElementById("dropdownUserIcon");
+
+    if (profilePic) {
+        navUserIcon.src = profilePic;
+        dropdownUserIcon.src = profilePic;
+    } else {
+        // Use default profile picture
+        navUserIcon.src = "default-user-icon.png";
+        dropdownUserIcon.src = "default-user-icon.png";
+    }
+
+    // Load and display jobs
+    loadJobs();
+
+   
+
+    deleteExpiredJobs();
+});
+        
+        // Navigation Dropdown Toggle
+        const submenu = document.getElementById("submenu");
+        
+        function toggleMenu(event) {
+            event.stopPropagation();
+            submenu.classList.toggle("open-menu");
+        }
+        
+        document.addEventListener("click", function (event) {
+            if (!event.target.closest(".profile-info") && !event.target.closest(".submenu-wrap")) {
+                submenu.classList.remove("open-menu");
+            }
+        });
+        
+        function logout() {
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("userData");
+            localStorage.removeItem("profilePic");
+            window.location.href = "login.html";
+        }
+        
+        // Job handling functions
+        function loadJobs() {
+    fetch('http://localhost:3000/api/jobs')
+        .then(response => response.json())
+        .then(jobs => {
+            const recentJobsContainer = document.getElementById("recentJobs");
+            const allJobsContainer = document.getElementById("allJobs");
+
+            if (jobs.length === 0) {
+                recentJobsContainer.innerHTML = "<p>No posted jobs available.</p>";
+                allJobsContainer.innerHTML = "<p>No posted jobs available.</p>";
+                return;
+            }
+
+            // Display last 5 jobs as recent
+            recentJobsContainer.innerHTML = jobs.slice(-3).map(job => createJobCard(job)).join("");
+            
+            // Display all jobs
+            allJobsContainer.innerHTML = jobs.map(job => createJobCard(job)).join("");
+        })
+        .catch(error => console.error("Error loading jobs:", error));
+}
+
+function createJobCard(job) {
+    return `
+        <div class="job-card">
+            <h3>${job.title}</h3>
+            <p>Salary: ₹${job.salary}/hour</p>
+            <p>Job Type: ${job.jobType}</p>
+            <p>Vacancy: ${job.vacancy} positions</p>
+                <p>Posted By: ${job.postedBy}</p>
+            <button onclick="viewJobDetails(${job.id})">View Details</button>
+        </div>
+    `;
+}
+
+function viewJobDetails(jobId) {
+    window.location.href = `jobDetails.html?id=${jobId}`;
+}
+        
+        function viewJobDetails(jobId) {
+            if (localStorage.getItem("isLoggedIn") !== "true") {
+                alert("Please login first.");
+                window.location.href = "login.html";
+                return;
+            }
+            window.location.href = `jobDetails.html?id=${jobId}`;
+        }
+        
+        // Search functionality
+const searchInput = document.querySelector(".searchbar input");
+const searchSuggestions = document.getElementById("searchSuggestions");
+
+searchInput.addEventListener("input", async function () {
+    const query = this.value.trim().toLowerCase();
+    searchSuggestions.style.display = "none";
+
+    if (!query) {
+        searchSuggestions.style.display = "none";
+        return;
+    }
+
+    // Fetch jobs from server
+    try {
+        const response = await fetch('http://localhost:3000/api/jobs');
+        const jobs = await response.json();
+
+        // Generate suggestions
+        const suggestions = [];
+        jobs.forEach(job => {
+            if (job.jobType.toLowerCase().includes(query)) {
+                suggestions.push(`Job: ${job.jobType}<br>Salary: ₹${job.salary}/hour<br>Location: ${job.district}`);
+            }
+            if (job.district.toLowerCase().includes(query)) {
+                suggestions.push(`Location: ${job.district}<br>Job: ${job.jobType}<br>Salary: ₹${job.salary}/hour`);
+            }
+            if (job.salary.toString().includes(query)) {
+                suggestions.push(`Salary: ₹${job.salary}/hour<br>Job: ${job.jobType}<br>Location: ${job.district}`);
+            }
+        });
+
+        // Display suggestions
+        if (suggestions.length > 0) {
+            searchSuggestions.innerHTML = suggestions.map(suggestion => `
+                <div class="suggestion-item" onclick="selectSuggestion('${suggestion.split('<br>')[0].split(': ')[1]}')">
+                    ${suggestion}
+                </div>
+            `).join("");
+            searchSuggestions.style.display = "block";
+        } else {
+            searchSuggestions.style.display = "none";
+        }
+    } catch (error) {
+        console.error("Search error:", error);
+    }
+});
+
+// Clear suggestions when input is empty
+searchInput.addEventListener("blur", () => {
+    setTimeout(() => {
+        searchSuggestions.style.display = "none";
+    }, 200);
+});
+
+// Select suggestion and filter jobs
+function selectSuggestion(suggestion) {
+    searchInput.value = suggestion;
+    searchSuggestions.style.display = "none";
+
+    fetch(`http://localhost:3000/api/jobs?search=${suggestion}`)
+        .then(response => response.json())
+        .then(jobs => {
+            const allJobsContainer = document.getElementById("allJobs");
+            allJobsContainer.innerHTML = jobs.map(job => createJobCard(job)).join("");
+            allJobsContainer.scrollIntoView({ behavior: "smooth" });
+        });
+}
+        
+        function deleteExpiredJobs() {
+            const jobs = JSON.parse(localStorage.getItem("jobs")) || [];
+            const activeJobs = jobs.filter(job => new Date(job.endDate) > new Date());
+            localStorage.setItem("jobs", JSON.stringify(activeJobs));
+        }
+        
+        </script>
+        
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

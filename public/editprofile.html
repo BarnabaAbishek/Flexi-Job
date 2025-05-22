@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        /* Navigation Styles */
+        .navmenu {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: #002633;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .mainlogo a {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00cc66;
+            text-decoration: none;
+        }
+
+        .navbarList {
+            list-style-type: none;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbarList a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbarList a:hover {
+            color: #00cc66;
+        }
+
+        .profile-info {
+            height: 2rem;
+            width: 2rem;
+            color: #fff;
+            cursor: pointer;
+            background-color: #00cc66;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .profile-info:hover {
+            background-color: #008040;
+        }
+
+        /* Dropdown Menu Styles */
+        .submenu-wrap {
+            position: absolute;
+            top: 11%;
+            right: 0;
+            width: 20rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            z-index: 1000;
+        }
+
+        .submenu-wrap.open-menu {
+            max-height: 600px;
+        }
+
+        .sub-menu {
+            border: solid #002633 1px;
+            border-radius: 5px;
+            background: #fff;
+            color: #241c1c;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-info i {
+            font-size: 2rem;
+            color: #00cc66;
+        }
+
+        .user-info h2 {
+            font-weight: 500;
+        }
+
+        .sub-menu-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: #525252;
+            margin: 12px 0;
+            transition: color 0.3s ease;
+        }
+
+        .sub-menu-link:hover {
+            color: #00cc66;
+        }
+
+        .sub-menu-link i {
+            font-size: 1.2rem;
+            color: #00cc66;
+        }
+
+        /* Profile Editor Container */
+        .profile-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-pic-container {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .edit-icon {
+            position: absolute;
+            bottom: 0;
+            right: 30%;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border-radius: 50%;
+            padding: 5px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* Read-only input fields */
+        input[readonly], select[readonly] {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            cursor: not-allowed;
+        }
+
+        /* Enhanced Footer Styles */
+        footer {
+            background-color: #002633;
+            color: #fff;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .footer-section h4 {
+            color: #00cc66;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #00cc66;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #00cc66;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #004354;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="navmenu">
+            <div class="mainlogo">
+                <a href="home.html">Flexi Job
+                    <i class="fas fa-briefcase fa-2x" style="color: #00cc66;"></i>
+                </a>
+            </div>
+            <ul class="navbarList">
+                <li><a href="home.html">Home</a></li>
+                
+                <li><a href="">Contact</a></li>
+                <li class="profile-info" onclick="toggleMenu(event)">
+                    <img id="navUserIcon" src="default-user-icon.png" alt="User Icon" style="width: 32px; height: 32px; border-radius: 50%;">
+                </li>
+            </ul>
+            <!-- Dropdown Menu -->
+            <div class="submenu-wrap" id="submenu">
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img id="dropdownUserIcon" src="default-user-icon.png" alt="User Icon" style="width: 50px; height: 50px; border-radius: 50%;">
+                        <h2 id="dropdownUserName">User Name</h2>
+                    </div>
+                    <hr>
+                    <a href="editProfile.html" class="sub-menu-link">
+                        <i class="fas fa-user-edit"></i>
+                        <p>Edit Profile</p>
+                    </a>
+                    
+                    <a href="" class="sub-menu-link">
+                        <i class="fas fa-question-circle"></i>
+                        <p>Help & Support</p>
+                    </a>
+                    <a href="" class="sub-menu-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <p>Logout</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Editor Container -->
+    <div class="profile-container">
+        <input type="file" id="fileInput" accept="image/*" hidden>
+        <div class="profile-pic-container">
+            <img id="profilePic" src="default-user-icon.png" alt="Profile Picture" class="profile-pic">
+            <div class="edit-icon" onclick="document.getElementById('fileInput').click()">✏️</div>
+        </div>
+
+        <!-- Profile Form -->
+        <form id="profileForm">
+            <!-- Full Name -->
+            <div class="mb-3">
+                <label for="fullName" class="form-label">Name</label>
+                <input type="text" id="fullName" class="form-control" readonly>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" readonly>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="mb-3">
+                <label for="dob" class="form-label">Date of Birth</label>
+                <input type="date" id="dob" class="form-control" readonly>
+            </div>
+
+            <!-- Gender -->
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <input type="text" id="gender" class="form-control" readonly>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="tel" id="phone" class="form-control" readonly>
+            </div>
+
+            <!-- Address -->
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" id="address" class="form-control" readonly>
+            </div>
+
+            <!-- Category -->
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <input type="text" id="category" class="form-control" readonly>
+            </div>
+        </form>
+    </div>
+
+    <!-- Enhanced Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Company Overview</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Browse Jobs</a></li>
+                    <li><a href="#">Post a Job</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="contact-info" style="margin-top: 20px;">
+                    <p>Call Us: <a href="tel:+919751859361" id="call-link">+91 97518 59361</a></p>
+                    <p>Email Us: <a href="mailto:flexijob9@gmail.com" id="email-link">flexijob9@gmail.com</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 FlexiJobs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+
+          // Navigation Dropdown Toggle
+          const submenu = document.getElementById("submenu");
+        
+        function toggleMenu(event) {
+            event.stopPropagation();
+            submenu.classList.toggle("open-menu");
+        }
+        
+        document.addEventListener("click", function (event) {
+            if (!event.target.closest(".profile-info") && !event.target.closest(".submenu-wrap")) {
+                submenu.classList.remove("open-menu");
+            }
+        });
+       
+
+       document.addEventListener("DOMContentLoaded", function () {
+        const userData = JSON.parse(localStorage.getItem("userData"));
+
+        // Redirect to login if not logged in
+        if (!userData || !userData.email) {
+            alert("Please login first.");
+            window.location.href = "login.html";
+            return;
+        }
+
+        const userEmail = userData.email;
+
+        // Fetch user data from server
+        fetch(`http://localhost:3000/api/user?email=${userEmail}`)
+            .then(response => response.json())
+            .then(user => {
+                // Populate form data
+                document.getElementById("fullName").value = user.fullName;
+                document.getElementById("email").value = user.email;
+
+                // Format date to yyyy-MM-dd for date input
+                const dob = new Date(user.dob);
+                const formattedDOB = dob.toISOString().split('T')[0];
+                document.getElementById("dob").value = formattedDOB;
+
+                document.getElementById("gender").value = user.gender;
+                document.getElementById("phone").value = user.phone;
+                document.getElementById("address").value = user.address;
+                document.getElementById("category").value = user.category;
+
+                // Load profile picture from localStorage
+                const profilePic = localStorage.getItem("profilePic");
+                document.getElementById("profilePic").src = profilePic ? profilePic : "default-user-icon.png";
+            })
+            .catch(error => {
+                console.error("Error fetching user data:", error);
+                alert("Failed to load user data. Please try again.");
+            });
+
+        // Add update form handler
+        document.getElementById("profileForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const updatedData = {
+                fullName: document.getElementById("fullName").value,
+                email: document.getElementById("email").value,
+                dob: document.getElementById("dob").value,
+                gender: document.getElementById("gender").value,
+                phone: document.getElementById("phone").value,
+                address: document.getElementById("address").value,
+                category: document.getElementById("category").value
+            };
+
+            // Send updated data to the server
+            fetch('http://localhost:3000/api/update-user', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Profile updated successfully');
+                    // Update localStorage with the new fullName
+                    const userData = JSON.parse(localStorage.getItem("userData"));
+                    userData.fullName = updatedData.fullName;
+                    localStorage.setItem("userData", JSON.stringify(userData));
+                } else {
+                    alert('Failed to update profile. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+
+        // Handle profile picture upload
+        document.getElementById("fileInput").addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const profilePic = event.target.result;
+
+                // Save to localStorage
+                localStorage.setItem("profilePic", profilePic);
+
+                // Update profile picture in UI
+                document.getElementById("profilePic").src = profilePic;
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+    // Load profile picture from localStorage
+    const profilePic = localStorage.getItem("profilePic");
+    const navUserIcon = document.getElementById("navUserIcon");
+    const dropdownUserIcon = document.getElementById("dropdownUserIcon");
+
+    if (profilePic) {
+        navUserIcon.src = profilePic;
+        dropdownUserIcon.src = profilePic;
+    } else {
+        // Use default profile picture
+        navUserIcon.src = "default-user-icon.png";
+        dropdownUserIcon.src = "default-user-icon.png";
+    }
+</script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

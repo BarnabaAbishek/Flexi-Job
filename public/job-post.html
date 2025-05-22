@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Part-Time Job</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Your existing CSS styles here */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        .navmenu {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: #002633;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .mainlogo a {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00cc66;
+            text-decoration: none;
+        }
+
+        .navbarList {
+            list-style-type: none;
+            display: inline-flex;
+            margin-right: 1rem;
+            gap: 1.5rem;
+        }
+
+        .navbarList a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbarList a:hover {
+            color: #00cc66;
+        }
+
+        .profile-info {
+            height: 2rem;
+            width: 2rem;
+            color: #fff;
+            cursor: pointer;
+            background-color: #00cc66;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .profile-info img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .submenu-wrap {
+            position: absolute;
+            top: 11%;
+            right: 0;
+            width: 20rem;
+            max-height: 0px;
+            overflow: hidden;
+            transition: max-height 0.5s;
+            z-index: 1000;
+        }
+
+        .submenu-wrap.open-menu {
+            max-height: 600px;
+        }
+
+        .sub-menu {
+            border: solid #002633 1px;
+            border-radius: 5px;
+            background: #fff;
+            color: #241c1c;
+            padding: 20px;
+            margin: 10px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-info h2 {
+            font-weight: 500;
+        }
+
+        .sub-menu-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: #525252;
+            margin: 12px 0;
+            transition: color 0.3s ease;
+        }
+
+        .sub-menu-link:hover {
+            color: #00cc66;
+        }
+
+        .sub-menu-link i {
+            font-size: 1.2rem;
+            color: #00cc66;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            gap: 2rem;
+        }
+
+        .form-container form {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .form-container .right-side {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #002633;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            color: #002633;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00cc66;
+            box-shadow: 0 0 5px rgba(0, 204, 102, 0.5);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #002633;
+        }
+
+        .error-border {
+        border: 2px solid #ff4444 !important;
+        box-shadow: 0 0 8px rgba(255, 68, 68, 0.2);
+    }
+    .error-message {
+        color: #ff4444;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: none;
+    }
+
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 1rem;
+            background-color: #00cc66;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #008040;
+        }
+
+        .message {
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-top: 1rem;
+            color: #002633;
+        }
+
+        footer {
+            background-color: #002633;
+            color: #fff;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .footer-section h4 {
+            color: #00cc66;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #00cc66;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #00cc66;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #004354;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="navmenu">
+            <div class="mainlogo">
+                <a href="home.html">Flexi Job
+                    <i class="fas fa-briefcase fa-2x" style="color: #00cc66;"></i>
+                </a>
+            </div>
+            <ul class="navbarList">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="">Contact</a></li>
+                <li class="profile-info" onclick="toggleMenu(event)">
+                    <img id="navUserIcon" src="default-user-icon.png" alt="User Icon">
+                </li>
+            </ul>
+            <div class="submenu-wrap" id="submenu">
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img id="dropdownUserIcon" src="default-user-icon.png" alt="User Icon">
+                        <h2 id="dropdownUserName">User Name</h2>
+                    </div>
+                    <hr>
+                    <a href="editProfile.html" class="sub-menu-link">
+                        <i class="fas fa-user-edit"></i>
+                        <p>Edit Profile</p>
+                    </a>
+                    <a href="" class="sub-menu-link">
+                        <i class="fas fa-briefcase"></i>
+                        <p>Posted Jobs</p>
+                    </a>
+                    <a href="" class="sub-menu-link">
+                        <i class="fas fa-file-alt"></i>
+                        <p>Applied Jobs</p>
+                    </a>
+                    <a href="" class="sub-menu-link">
+                        <i class="fas fa-cog"></i>
+                        <p>Settings & Privacy</p>
+                    </a>
+                    <a href="" class="sub-menu-link">
+                        <i class="fas fa-question-circle"></i>
+                        <p>Help & Support</p>
+                    </a>
+                    <a href="" class="sub-menu-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <p>Logout</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Job Post Form -->
+    <div class="form-container">
+        <form id="jobForm">
+            <!-- Left Side Fields -->
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" required placeholder="Full Name">
+                <div class="error-message" id="nameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="jobType">Job Type</label>
+                <input type="text" id="jobType" required placeholder="Job ">
+                <div class="error-message" id="jobTypeError"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Gender Requirement</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="gender" value="male" required> Male
+                    </label>
+                    <label>
+                        <input type="radio" name="gender" value="female"> Female
+                    </label>
+                    <label>
+                        <input type="radio" name="gender" value="any"> Any
+                    </label>
+                </div>
+                <div class="error-message" id="genderError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="contactNumber">Contact Number</label>
+                <input type="tel" id="contactNumber" pattern="[0-9]{10}" required placeholder="Contact Number">
+                <div class="error-message" id="contactError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="salary">Salary (per hour)</label>
+                <input type="number" id="salary" required placeholder="Expected Salary">
+                <div class="error-message" id="salaryError"></div>
+            </div>
+
+            <!-- Location Fields -->
+            <div class="form-group">
+                <label>Location Details</label>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <select id="state" required>
+                        <option value="">Select State</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    </select>
+                    <div class="error-message" id="stateError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="district">District</label>
+                    <select id="district" required>
+                        <option value="">Select District</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                        <option value="Hyderabad">Hyderabad</option>
+                    </select>
+                    <div class="error-message" id="districtError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="area">Area (Optional)</label>
+                    <input type="text" id="area" placeholder="Enter Area">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="googleMapLink">Google Map Link (Optional)</label>
+                <input type="url" id="googleMapLink" placeholder="Enter Google Map link">
+                <div class="error-message" id="googleMapLinkError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="peopleNeeded">Number of People Needed</label>
+                <input type="number" id="peopleNeeded" required placeholder="Man Powder">
+                <div class="error-message" id="peopleNeededError"></div>
+            </div>
+
+            <button type="submit">Post Job</button>
+        </form>
+
+        <!-- Right Side Fields -->
+        <div class="right-side">
+            <div>
+                <div class="form-group">
+                    <label for="date">Starting Date</label>
+                    <input type="date" id="date" required>
+                    <div class="error-message" id="startDateError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="timeLimit">Ending Date</label>
+                    <input type="date" id="timeLimit" required>
+                    <div class="error-message" id="endDateError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="timeInput">Working Time</label>
+                    <input type="time" id="timeInput" required placeholder="Time">
+                    <div class="error-message" id="timeError"></div>
+                </div>
+            </div>
+
+            <div class="message">
+                <strong>❗ Note:</strong><br>
+                You are setting how long this job will be available on the website.<br><br>
+                Once the provided end date and time are reached, your job post will automatically be removed from the home page.
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Company Overview</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Browse Jobs</a></li>
+                    <li><a href="#">Post a Job</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="contact-info" style="margin-top: 20px;">
+                    <p>Email: support@flexijobs.com</p>
+                    <p>Phone: +91 98765 43210</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 FlexiJobs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- CSS -->
+<style>
+    .error-message {
+        color: red;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: none;
+    }
+    .error-border {
+        border: 2px solid red !important;
+    }
+</style>
+
+<script>
+    // Navigation Dropdown Toggle
+    const submenu = document.getElementById("submenu");
+
+    function toggleMenu(event) {
+        event.stopPropagation();
+        submenu.classList.toggle("open-menu");
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!event.target.closest(".profile-info") && !event.target.closest(".submenu-wrap")) {
+            submenu.classList.remove("open-menu");
+        }
+    });
+
+    
+document.addEventListener("DOMContentLoaded", function () {
+    const user = JSON.parse(localStorage.getItem("userData"));
+    const profilePic = localStorage.getItem("profilePic");
+
+    if (user) {
+        document.getElementById("dropdownUserName").textContent = user.fullName || "User Name";
+        document.getElementById("name").value = user.fullName || "";
+    }
+
+    if (profilePic) {
+        document.getElementById("navUserIcon").src = profilePic;
+        document.getElementById("dropdownUserIcon").src = profilePic;
+    }
+});
+
+const form = document.getElementById('jobForm');
+const inputs = {
+    name: document.getElementById('name'),
+    jobType: document.getElementById('jobType'),
+    contactNumber: document.getElementById('contactNumber'),
+    salary: document.getElementById('salary'),
+    state: document.getElementById('state'),
+    district: document.getElementById('district'),
+    peopleNeeded: document.getElementById('peopleNeeded'),
+    date: document.getElementById('date'),
+    timeLimit: document.getElementById('timeLimit'),
+    timeInput: document.getElementById('timeInput'),
+    area: document.getElementById('area'),
+    googleMapLink: document.getElementById('googleMapLink')
+};
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Form validation
+    const errors = validateForm();
+    if (Object.keys(errors).length === 0) {
+        // If validation passes, create the jobData object
+        const jobData = {
+            title: inputs.jobType.value.trim(),
+            jobType: inputs.jobType.value.trim(),
+            gender: document.querySelector('input[name="gender"]:checked').value,
+            contactNumber: inputs.contactNumber.value.trim(),
+            salary: parseFloat(inputs.salary.value),
+            state: inputs.state.value,
+            district: inputs.district.value,
+            area: inputs.area.value.trim() || null,
+            googleMapLink: inputs.googleMapLink.value.trim() || null,
+            vacancy: parseInt(inputs.peopleNeeded.value),
+            startDate: inputs.date.value,
+            endDate: new Date(`${inputs.timeLimit.value}T${inputs.timeInput.value}`).toISOString(),
+            postedBy: inputs.name.value.trim()
+        };
+
+        // Send job data to the server
+        fetch('http://localhost:3000/api/jobs', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(jobData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to post job');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert('Job posted successfully!');
+            window.location.href = 'home.html';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error posting job. Please try again.');
+        });
+    } else {
+        displayErrors(errors);
+    }
+});
+
+function validateForm() {
+    const errors = {};
+
+    // Perform validation for each input
+    if (!inputs.jobType.value.trim()) {
+        errors.jobType = 'Job type is required';
+    }
+    if (!inputs.contactNumber.value.trim() || !/^\d{10}$/.test(inputs.contactNumber.value)) {
+        errors.contactNumber = 'Valid 10-digit contact number is required';
+    }
+    if (!inputs.salary.value || parseFloat(inputs.salary.value) < 10) {
+        errors.salary = 'Salary must be above ₹10';
+    }
+    if (!inputs.state.value.trim()) {
+        errors.state = 'State is required';
+    }
+    if (!inputs.district.value.trim()) {
+        errors.district = 'District is required';
+    }
+    if (!inputs.peopleNeeded.value || parseInt(inputs.peopleNeeded.value) < 1) {
+        errors.peopleNeeded = 'At least 1 person needed';
+    }
+    if (!inputs.date.value.trim()) {
+        errors.date = 'Start date is required';
+    }
+    if (!inputs.timeLimit.value.trim()) {
+        errors.timeLimit = 'End date is required';
+    }
+    if (!inputs.timeInput.value.trim()) {
+        errors.timeInput = 'Working time is required';
+    }
+
+    // Google Maps link validation (optional field)
+    if (inputs.googleMapLink.value.trim() && !/^https?:\/\/(www\.)?google\.com\/maps\/.*/.test(inputs.googleMapLink.value.trim())) {
+        errors.googleMapLink = 'Invalid Google Map link';
+    }
+
+    return errors;
+}
+
+function displayErrors(errors) {
+    Object.keys(errors).forEach(field => {
+        const errorElement = document.getElementById(`${field}Error`);
+        if (errorElement) {
+            errorElement.textContent = errors[field];
+            errorElement.style.display = 'block';
+        }
+    });
+}
+</script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Real-time validation functions
+        function validateName() {
+            const value = inputs.name.value.trim();
+            const errorElement = document.getElementById('nameError');
+            if (!value) {
+                errorElement.textContent = 'Full name is required';
+                errorElement.style.display = 'block';
+                inputs.name.classList.add('error-border');
+            } else {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                inputs.name.classList.remove('error-border');
+            }
+        }
+    
+        function validateJobType() {
+            const value = inputs.jobType.value.trim();
+            const errorElement = document.getElementById('jobTypeError');
+            if (!value) {
+                errorElement.textContent = 'Job type is required';
+                errorElement.style.display = 'block';
+                inputs.jobType.classList.add('error-border');
+            } else {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                inputs.jobType.classList.remove('error-border');
+            }
+        }
+    
+        function validateGender() {
+            const selected = document.querySelector('input[name="gender"]:checked');
+            const errorElement = document.getElementById('genderError');
+            if (!selected) {
+                errorElement.textContent = 'Gender requirement is required';
+                errorElement.style.display = 'block';
+                document.querySelector('.radio-group').classList.add('error-border');
+            } else {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                document.querySelector('.radio-group').classList.remove('error-border');
+            }
+        }
+    
+        function validateSalary() {
+            const value = inputs.salary.value;
+            const errorElement = document.getElementById('salaryError');
+            if (!value || parseFloat(value) < 10) {
+                errorElement.textContent = 'Salary must be above ₹10';
+                errorElement.style.display = 'block';
+                inputs.salary.classList.add('error-border');
+            } else {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                inputs.salary.classList.remove('error-border');
+            }
+        }
+    
+        function validateState() {
+            const value = inputs.state.value;
+            const errorElement = document.getElementById('stateError');
+            if (!value) {
+                errorElement.textContent = 'State is required';
+                errorElement.style.display = 'block';
+                inputs.state.classList.add('error-border');
+            } else {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                inputs.state.classList.remove('error-border');
+            }
+        }
+    
+        function validateDistrict() {
+            const value = inputs.district.value;
+            const errorElement = document.getElementById('districtError');
+            if (!value) {
+                errorElement.textContent = 'District is required';
+                errorElement.style.display = 'block';
+                inputs.district.classList.add('error-border');
+            } else {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                inputs.district.classList.remove('error-border');
+            }
+        }
+    
+        function validatePeopleNeeded() {
+            const value = inputs.peopleNeeded.value;
+            const errorElement = document.getElementById('peopleNeededError');
+            if (!value || parseInt(value) < 1) {
+                errorElement.textContent = 'At least 1 person needed';
+                errorElement.style.display = 'block';
+                inputs.peopleNeeded.classList.add('error-border');
+            } else {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                inputs.peopleNeeded.classList.remove('error-border');
+            }
+        }
+    
+        function validateDate() {
+            const value = inputs.date.value;
+            const errorElement = document.getElementById('startDateError');
+            if (!value) {
+                errorElement.textContent = 'Start date is required';
+                errorElement.style.display = 'block';
+                inputs.date.classList.add('error-border');
+            } else {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                inputs.date.classList.remove('error-border');
+            }
+        }
+    
+        function validateTimeLimit() {
+            const value = inputs.timeLimit.value;
+            const errorElement = document.getElementById('endDateError');
+            if (!value) {
+                errorElement.textContent = 'End date is required';
+                errorElement.style.display = 'block';
+                inputs.timeLimit.classList.add('error-border');
+            } else {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                inputs.timeLimit.classList.remove('error-border');
+            }
+        }
+    
+        function validateTimeInput() {
+            const value = inputs.timeInput.value;
+            const errorElement = document.getElementById('timeError');
+            if (!value) {
+                errorElement.textContent = 'Working time is required';
+                errorElement.style.display = 'block';
+                inputs.timeInput.classList.add('error-border');
+            } else {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                inputs.timeInput.classList.remove('error-border');
+            }
+        }
+    
+        function validateGoogleMapLink() {
+            const value = inputs.googleMapLink.value.trim();
+            const errorElement = document.getElementById('googleMapLinkError');
+            if (value) {
+                const isValid = /^https?:\/\/(www\.)?google\.com\/maps\/.*/.test(value);
+                if (!isValid) {
+                    errorElement.textContent = 'Invalid Google Map link';
+                    errorElement.style.display = 'block';
+                    inputs.googleMapLink.classList.add('error-border');
+                } else {
+                    errorElement.textContent = '';
+                    errorElement.style.display = 'none';
+                    inputs.googleMapLink.classList.remove('error-border');
+                }
+            } else {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                inputs.googleMapLink.classList.remove('error-border');
+            }
+        }
+        inputs.contactNumber.addEventListener("blur", () => {
+    const contactError = document.getElementById("contactNumberError");
+    const contactValue = inputs.contactNumber.value;
+
+    if (contactValue.length === 0) {
+        contactError.textContent = "Contact number is required";
+    } else if (contactValue.length < 10) {
+        contactError.textContent = "Contact number must be exactly 10 digits";
+    } else {
+        contactError.textContent = "";
+    }
+
+    contactError.style.display = contactError.textContent ? "block" : "none";
+});
+    
+        // Attach event listeners for real-time validation
+        inputs.name.addEventListener('input', validateName);
+        inputs.name.addEventListener('blur', validateName);
+    
+        inputs.jobType.addEventListener('input', validateJobType);
+        inputs.jobType.addEventListener('blur', validateJobType);
+    
+        document.querySelectorAll('input[name="gender"]').forEach(radio => {
+            radio.addEventListener('change', validateGender);
+        });
+    
+        inputs.salary.addEventListener('input', validateSalary);
+    
+        inputs.state.addEventListener('change', validateState);
+        inputs.district.addEventListener('change', validateDistrict);
+    
+        inputs.peopleNeeded.addEventListener('input', validatePeopleNeeded);
+    
+        inputs.date.addEventListener('change', validateDate);
+        inputs.timeLimit.addEventListener('change', validateTimeLimit);
+    
+        inputs.timeInput.addEventListener('change', validateTimeInput);
+    
+        inputs.googleMapLink.addEventListener('input', validateGoogleMapLink);
+    </script>
+</body>
+</html>

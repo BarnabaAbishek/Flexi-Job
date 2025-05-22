@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Keep existing head content -->
+        <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Job Application - CareerConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+            /* Original Form Styles */
+
+        * {
+
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            min-height: 100vh;
+        }
+        
+
+         /* Navigation Styles */
+       
+         .navmenu {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: #002633;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .mainlogo a {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #00cc66;
+        text-decoration: none;
+      }
+        .navbarList {
+            list-style-type: none;
+            display: inline-flex;
+            margin-right: 1rem;
+            gap: 1.5rem;
+        }
+        .navbarList a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .navbarList a:hover {
+            color: #00cc66;
+        }
+        .profile-info {
+            height: 2rem;
+            width: 2rem;
+            color: #fff;
+            cursor: pointer;
+            background-color: #00cc66;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+      .profile-info i {
+        font-size: 1.2rem;
+        color: #fff;
+      }
+      .submenu-wrap {
+        position: absolute;
+        top: 11%;
+        right: 0;
+        width: 20rem;
+        max-height: 0px;
+        overflow: hidden;
+        transition: max-height 0.5s;
+        z-index: 1000;
+      }
+      .submenu-wrap.open-menu {
+        max-height: 600px;
+      }
+      .sub-menu {
+        border: solid #002633 1px;
+        border-radius: 5px;
+        background: #fff;
+        color: #241c1c;
+        padding: 20px;
+        margin: 10px;
+      }
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .user-info i {
+        font-size: 2rem;
+        color: #00cc66;
+      }
+      .user-info h2 {
+        font-weight: 500;
+      }
+      .sub-menu-link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+        color: #525252;
+        margin: 12px 0;
+        transition: color 0.3s ease;
+      }
+      .sub-menu-link:hover {
+        color: #00cc66;
+      }
+      .sub-menu-link i {
+        font-size: 1.2rem;
+        color: #00cc66;
+      }
+
+        /* Form Container */
+        .container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2.5rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.6rem;
+            color: #002633;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #00cc66;
+            box-shadow: 0 0 0 3px rgba(0, 204, 102, 0.1);
+            outline: none;
+        }
+
+        .file-upload {
+            border: 2px dashed #00cc66;
+            border-radius: 8px;
+            padding: 1.8rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-upload label {
+            color: #00cc66;
+            cursor: pointer;
+            display: block;
+        }
+
+        .preview-container {
+            margin-top: 1.5rem;
+            display: none;
+        }
+        /* Add to existing styles */
+        .qualification-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        button[type="submit"] {
+
+            background: #00cc66;
+
+            color: #fff;
+            padding: 1.2rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background: #00994d;
+            transform: translateY(-2px);
+        }
+
+        /* Error Handling */
+        .error {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 0.4rem;
+            display: none;
+            animation: errorSlide 0.4s ease;
+        }
+
+        @keyframes errorSlide {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+         /* Enhanced Footer Styles */
+         footer {
+            background-color: #002633;
+            color: #fff;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+        .footer-section h4 {
+            color: #00cc66;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: #00cc66;
+        }
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-links a {
+            color: #fff;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: #00cc66;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #004354;
+        }
+    </style>
+</head>
+<body>
+    <!-- Keep existing navigation -->
+        <!-- Navigation -->
+
+    <nav>
+
+        <div class="navmenu">
+            <div class="mainlogo">
+                <a href="home.html">Flexi Job
+                    <i class="fas fa-briefcase fa-2x" style="color: #00cc66;"></i>
+                </a>
+            </div>
+            <ul class="navbarList">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="job-post.html">Post Job</a></li>
+                <li><a href="">Contact</a></li>
+               
+                <li class="profile-info" onclick="toggleMenu(event)">
+                  <i class="fas fa-user"></i>
+                </li>
+              </ul>
+              <div class="submenu-wrap" id="submenu">
+                <div class="sub-menu">
+                  <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <h2>User Name</h2>
+                  </div>
+                  <hr>
+                  <a href="editProfile.html" class="sub-menu-link">
+                    <i class="fas fa-user-edit"></i>
+                    <p>Edit Profile</p>
+                  </a>
+                  <a href="" class="sub-menu-link">
+                    <i class="fas fa-briefcase"></i>
+                    <p>Posted Jobs</p>
+                  </a>
+                  <a href="" class="sub-menu-link">
+                    <i class="fas fa-file-alt"></i>
+                    <p>Applied Jobs</p>
+                  </a>
+                  <a href="" class="sub-menu-link">
+                    <i class="fas fa-cog"></i>
+                    <p>Settings & Privacy</p>
+                  </a>
+                  <a href="" class="sub-menu-link">
+                    <i class="fas fa-question-circle"></i>
+                    <p>Help & Support</p>
+                  </a>
+                  <a href="" class="sub-menu-link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <p>Logout</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </nav
+>
+
+
+    <div class="container">
+        <h1>Job Application Form</h1>
+
+        <form id="applicantForm">
+            <!-- Existing form groups -->
+                        <div class="form-group">
+
+                <label for="applicantName">Full Name</label>
+
+                <input type="text" id="applicantName" required placeholder="Full Name">
+                <div class="error" id="nameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" min="18" max="65" required placeholder="Age">
+                <div class="error" id="ageError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="error" id="genderError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" required placeholder="Email Address">
+                <div class="error" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" pattern="[0-9]{10}" required placeholder="Mobile number">
+                <div class="error" id="phoneError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address" rows="4" required placeholder="Address"></textarea>
+                <div class="error" id="addressError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="qualification">Highest Qualification</label>
+                <div class="qualification-group">
+                    <select id="qualification" required>
+                        <option value="">Select Qualification</option>
+                        <option value="school">School Education</option>
+                        <option value="undergraduate">Undergraduate</option>
+                        <option value="graduate">Graduate</option>
+                        <option value="postgraduate">Post Graduate</option>
+                        <option value="diploma">Diploma</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <input type="text" id="otherQualification" placeholder="Specify other qualification" 
+                           style="display: none;">
+                </div>
+                <div class="error" id="qualificationError"></div>
+            </div>
+
+            <!-- Existing form groups -->
+
+            <button type="submit">Submit Application</button>
+        </form>
+    </div>
+
+    <!-- Keep existing footer -->
+        <footer>
+
+        <div class="footer-container">
+
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Company Overview</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Browse Jobs</a></li>
+                    <li><a href="#">Post a Job</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="contact-info" style="margin-top: 20px;">
+                                            <p>Call Us: <a href="tel:+919751859361" id="call-link">+91 97518 59361</a></p>
+
+                              <!-- Clickable email -->
+
+      <p>Email Us: <a href="mailto:flexijob9@gmail.com" id="email-link">flexijob9@gmail.com</a></p>
+
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 FlexiJobs. All rights reserved.</p>
+        </div>
+    </footer
+>
+  
+<script>
+    // Navigation Dropdown Toggle
+    const submenu = document.getElementById("submenu");
+
+    function toggleMenu(event) {
+        event.stopPropagation();
+        submenu.classList.toggle("open-menu");
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!event.target.closest(".profile-info") && !event.target.closest(".submenu-wrap")) {
+            submenu.classList.remove("open-menu");
+        }
+    });
+
+    const form = document.getElementById('applicantForm');
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let isValid = true;
+
+    // Clear previous errors
+    document.querySelectorAll('.error').forEach(error => error.style.display = 'none');
+
+    // Validation checks
+    const fields = [
+        { 
+            id: 'applicantName', 
+            errorId: 'nameError', 
+            validate: v => v.length >= 3 || 'Name must be at least 3 characters' 
+        },
+        { 
+            id: 'age', 
+            errorId: 'ageError', 
+            validate: v => (v >= 18 && v <= 65) || 'Age must be between 18-65' 
+        },
+        { 
+            id: 'gender', 
+            errorId: 'genderError', 
+            validate: v => !!v || 'Please select gender' 
+        },
+        { 
+            id: 'email', 
+            errorId: 'emailError', 
+            validate: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Invalid email address' 
+        },
+        { 
+            id: 'phone', 
+            errorId: 'phoneError', 
+            validate: v => /^\d{10}$/.test(v) || 'Invalid phone number' 
+        },
+        { 
+            id: 'address', 
+            errorId: 'addressError', 
+            validate: v => v.length >= 10 || 'Address must be at least 10 characters' 
+        },
+        {
+            id: 'qualification',
+            errorId: 'qualificationError',
+            validate: () => {
+                const qual = document.getElementById('qualification').value;
+                const other = document.getElementById('otherQualification').value;
+                if (qual === 'other' && !other) return 'Please specify qualification';
+                return !!qual || 'Please select qualification';
+            }
+        }
+    ];
+
+    // Run validations
+    fields.forEach(({ id, errorId, validate }) => {
+        const element = document.getElementById(id);
+        const value = element.type === 'select-one' ? element.value : element.value.trim();
+        const result = validate(value);
+
+        if (result !== true) {
+            showError(errorId, result);
+            isValid = false;
+        }
+    });
+
+    if (!isValid) {
+        const firstError = document.querySelector('.error:not([style*="display: none"])');
+        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
+
+    // Get job and user data
+    const jobId = new URLSearchParams(window.location.search).get('jobId');
+    const user = JSON.parse(localStorage.getItem('userData'));
+
+    // Check user login
+    if (!user || !localStorage.getItem('isLoggedIn')) {
+        alert('Please login to apply!');
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Check existing application
+    try {
+        const response = await fetch(`http://localhost:3000/api/applications?userId=${user.email}&jobId=${jobId}`);
+        const applications = await response.json();
+        if (applications.length > 0) {
+            alert('You have already applied to this job!');
+            return;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to check existing applications');
+        return;
+    }
+
+    // Submit application
+    const applicationData = {
+        jobId: jobId,
+        userId: user.email,
+        applicantName: document.getElementById('applicantName').value.trim(),
+        age: parseInt(document.getElementById('age').value),
+        gender: document.getElementById('gender').value,
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        address: document.getElementById('address').value.trim(),
+        qualification: document.getElementById('qualification').value === 'other' 
+            ? document.getElementById('otherQualification').value.trim() 
+            : document.getElementById('qualification').value
+    };
+
+    try {
+        const response = await fetch('http://localhost:3000/api/applications', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(applicationData)
+        });
+
+        const result = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(result.details || 'Failed to submit application'); // Use server error message
+        }
+
+// job-application.html
+const vacancyResponse = await fetch(`http://localhost:3000/api/jobs/${jobId}/vacancy`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    // No body needed!
+});
+
+        if (!vacancyResponse.ok) throw new Error('Failed to update vacancy');
+
+        alert('Application submitted successfully!');
+        window.location.href = 'applied-jobs.html';
+        
+    } catch (error) {
+        console.error('Full error:', error);
+        alert(`Error: ${error.message}`); // Show actual error message
+    }
+});
+
+function showError(elementId, message) {
+    const errorElement = document.getElementById(elementId);
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    }
+}
+
+</script>
+    <!-- Keep Bootstrap JS at the end -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <!-- ... -->
+    <script>
+        // Existing code remains unchanged
+        
+        // Real-time validation for all fields
+        const fields = [
+            { id: 'applicantName', errorId: 'nameError', validate: v => v.length >= 3 || 'Name must be at least 3 characters' },
+            { id: 'age', errorId: 'ageError', validate: v => (v >= 18 && v <= 65) || 'Age must be between 18-65' },
+            { id: 'gender', errorId: 'genderError', validate: v => !!v || 'Please select gender' },
+            { id: 'email', errorId: 'emailError', validate: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Invalid email address' },
+            { id: 'phone', errorId: 'phoneError', validate: v => /^\d{10}$/.test(v) || 'Phone number must be exactly 10 digits' },
+            { id: 'address', errorId: 'addressError', validate: v => v.length >= 10 || 'Address must be at least 10 characters' },
+            { 
+                id: 'qualification', errorId: 'qualificationError', 
+                validate: () => {
+                    const qual = document.getElementById('qualification').value;
+                    const other = document.getElementById('otherQualification').value;
+                    if (qual === 'other' && !other) return 'Please specify qualification';
+                    return !!qual || 'Please select qualification';
+                }
+            }
+        ];
+        
+        // Attach real-time validation listeners to all fields
+        fields.forEach(({ id, errorId, validate }) => {
+            const element = document.getElementById(id);
+            element.addEventListener("input", () => {
+                const value = element.type === 'select-one' ? element.value : element.value.trim();
+                const errorMessage = validate(value);
+                const errorElement = document.getElementById(errorId);
+                if (errorMessage !== true) {
+                    errorElement.textContent = errorMessage;
+                    errorElement.style.display = "block";
+                } else {
+                    errorElement.textContent = "";
+                    errorElement.style.display = "none";
+                }
+            });
+        });
+        </script>
+        
+
+
+</body>
+</html>
